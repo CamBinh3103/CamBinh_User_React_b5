@@ -20,7 +20,7 @@ class Form extends Component {
   };
   handleAddUser = () => {
     axios({
-      url: "https://64de24a0825d19d9bfb22b3d.mockapi.io/users",
+      url: "https://651fdb19906e276284c39f85.mockapi.io/users",
       method: "POST",
       data: this.props.user,
     })
