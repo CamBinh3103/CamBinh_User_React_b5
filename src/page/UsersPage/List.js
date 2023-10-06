@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setUserAction } from "../../redux/action/user";
 import { message } from "antd";
+import { SET_DATA_FORM } from "../../redux/constant/user";
 
 class List extends Component {
   componentDidMount() {
@@ -21,7 +22,7 @@ class List extends Component {
               onClick={() => {
                 this.handleDelelte(user.id);
               }}
-              className="btn btn-danger"
+              className="btn btn-danger mr-1"
             >
               Delete
             </button>
@@ -29,11 +30,10 @@ class List extends Component {
               onClick={() => {
                 this.handleGetDetail(user.id);
               }}
-              className="btn btn-info mx-1"
+              className="btn btn-info mr-1"
             >
               Edit
             </button>
-            <button className="btn btn-success">Update</button>
           </td>
         </tr>
       );
@@ -57,6 +57,7 @@ class List extends Component {
       .get(`https://651fdb19906e276284c39f85.mockapi.io/users/${id}`)
       .then((res) => {
         console.log(res);
+        this.props.handleSetDataDorm(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -91,6 +92,12 @@ let mapDispatchToProps = (dispatch) => {
     handleSetUser: () => {
       dispatch(setUserAction());
     },
+    handleSetDataDorm: (user) => {
+      dispatch({
+        type: SET_DATA_FORM,
+        payload: user,
+      })
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(List);

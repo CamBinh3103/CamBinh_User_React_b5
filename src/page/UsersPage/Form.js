@@ -3,6 +3,7 @@ import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { SET_DATA_FORM, SET_USER } from "../../redux/constant/user";
 import { setUserAction } from "../../redux/action/user";
+import { message } from "antd";
 
 class Form extends Component {
   componentDidMount() {
@@ -34,6 +35,22 @@ class Form extends Component {
         console.log(err);
       });
   };
+  handleUpdateUser = (id) => {
+    axios({
+      url: `https://651fdb19906e276284c39f85.mockapi.io/users/${id}`,
+      method: "PUT",
+      data: this.props.user,
+    })
+    .then((res) => {
+        console.log(res);
+        this.props.handleSetUser();
+        message.success("cập nhật thành công")
+        this.formRef.current.reset();
+     })
+     .catch((err) => {
+          console.log(err);
+     });
+  }
   render() {
     return (
       <div>
@@ -70,6 +87,9 @@ class Form extends Component {
           >
             Thêm
           </button>
+          <button onClick={() => {
+            this.handleUpdateUser(this.props.user.id);
+          }} type="button" className="btn btn-success ml-2">Cập nhật</button>
         </form>
       </div>
     );
